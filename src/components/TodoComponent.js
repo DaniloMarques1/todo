@@ -35,7 +35,7 @@ export default function Todo() {
             <form>
                 <div className='form'>
                     <label className='label' htmlFor='task_input'>Task name: </label>
-                    <input onChange={(e) => setInput(e.target.value) } value={input} className='input' placeholder='Your task name'  id='task_input' type="text" />
+                    <input autoFocus onChange={(e) => setInput(e.target.value) } value={input} className='input' placeholder='Your task name'  id='task_input' type="text" />
                     <button onClick={addTask}  className='button' id='button_add' type='button'>Add</button>
                 </div>
             </form>
