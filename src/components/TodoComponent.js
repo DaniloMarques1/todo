@@ -5,7 +5,8 @@ import  './TodoComponent.css';
 import deleteImg from '../assets/delete.svg';
 
 export default function Todo() {
-    const [tasks, setTasks]  = useState([]);
+    const getTasksLocalStorage = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
+    const [tasks, setTasks]  = useState(getTasksLocalStorage);
     const [input, setInput] = useState('');
 
     function addTask() {
@@ -16,6 +17,7 @@ export default function Todo() {
             const arr = [...tasks]
             arr.push(task)
             setTasks(arr)
+            localStorage.setItem("tasks", JSON.stringify(arr));
             setInput("")
         }
     }
@@ -27,6 +29,7 @@ export default function Todo() {
         const newArr = tasks.filter((task) => task.id !== Number(id))
         //seta o novo array no state
         setTasks(newArr)
+        localStorage.setItem("tasks", JSON.stringify(newArr));
     }
 
     return (

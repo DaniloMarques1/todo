@@ -56,14 +56,14 @@
 #tasks > ul li {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    margin: 2px;
+    grid-gap: 10px;
+    margin: 13px;
 }
 
 .deleteImg {
     float: right;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
     margin-right: 12px;
-    margin-top: 6px;
 }
