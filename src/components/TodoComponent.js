@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,  } from 'react';
 
 import  './TodoComponent.css';
 
@@ -10,10 +10,11 @@ export default function Todo() {
     const [input, setInput] = useState('');
 
     function addTask() {
-        
+        //adicionamos o que foi digitado no input (caso tenha digitado algo) ao estado e salvando o estado no localStorage
         if (input.length > 0) {
             const id = tasks.length === 0 ? 1 : Number(tasks[tasks.length - 1].id) + 1
-            const task = {id : id, task : input}
+            const task = {id : id, task : input, checked: false, }
+            //precisamos criar um novo array para o estado pois o react precisa saber que algo mudou
             const arr = [...tasks]
             arr.push(task)
             setTasks(arr)
@@ -22,14 +23,24 @@ export default function Todo() {
         }
     }
 
-    function cleanTasks(event) {
-        //pega o id da task que foi clicada
-        const id = event.target.dataset.key;
-        //filtra as tasks devolvendo um novo array de tasks exceto pela task que possui o id clicado
-        const newArr = tasks.filter((task) => task.id !== Number(id))
-        //seta o novo array no state
-        setTasks(newArr)
-        localStorage.setItem("tasks", JSON.stringify(newArr));
+    function check(event,id) {
+        setTasks(
+            tasks.map(task => {
+                if (task.id !== id) return task
+                return {
+                    id : task.id,
+                    task : task.task,
+                    checked: !task.checked,
+                }
+            })
+        )
+    } 
+
+    function cleanTasks() {
+        const arr = tasks.filter(task => task.checked !== true)
+        console.log("new tasks: ", arr)
+        setTasks(arr);
+        localStorage.setItem("tasks", JSON.stringify(arr));
     }
 
     return (
@@ -43,12 +54,14 @@ export default function Todo() {
                 </div>
             </form>
             <div id='tasks'>
-                
+                <div className="deleteImg">
+                    <img onClick={cleanTasks} src={deleteImg} alt='Delete tasks' />
+                </div>
                 <ul>
                     {tasks.map(task => (
                       <li key = {task.id}>
-                            {task.task}  <img onClick={cleanTasks} data-key={task.id} className='deleteImg' src={deleteImg} alt='Delete tasks' />
-                      </li>  
+                            {task.task}  <input onClick={(event) => check(event, task.id)} type="checkbox" />
+                      </li>
                     ))}
                 </ul>
             </div>

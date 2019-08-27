@@ -60,10 +60,19 @@
     margin: 13px;
 }
 
+input:checked {
+    background-color: green;
+}
+
 .deleteImg {
-    float: right;
-    width: 18px;
-    height: 18px;
+    display: flex;
+    justify-content: center;
+}
+
+.deleteImg > img {
+    width: 28px;
+    height: 28px;
     cursor: pointer;
+    margin-top: 10px;
     margin-right: 12px;
 }
